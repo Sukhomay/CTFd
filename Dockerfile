@@ -18,7 +18,11 @@ RUN apk update && \
 
 COPY . /opt/CTFd
 
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install --no-cache-dir \
+        "jinja2<3.1" \
+        "greenlet==1.1.3" \
+        "gevent==21.12.0" && \
+    pip install --no-cache-dir -r requirements.txt
 RUN for d in CTFd/plugins/*; do \
         if [ -f "$d/requirements.txt" ]; then \
             pip install -r $d/requirements.txt --no-cache-dir; \
